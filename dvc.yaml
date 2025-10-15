@@ -12,8 +12,8 @@ stages:
       - train.py
       - data/data_raw.csv
     outs:
-      - metrics.json:
-          cache: false
-          metric: true
       - confusion_matrix.png:
+          cache: false
+    metrics:
+      - metrics.json:
           cache: false
