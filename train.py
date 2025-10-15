@@ -1,5 +1,5 @@
 import pandas as pd
-from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix
 import json
 import seaborn as sns
@@ -11,7 +11,7 @@ X = df.iloc[:, :-1]
 y = df.iloc[:, -1]
 
 # Train model
-model = LogisticRegression(random_state=42)
+model = RandomForestClassifier(random_state=42, n_estimators=100)
 model.fit(X, y)
 preds = model.predict(X)
 
@@ -21,9 +21,9 @@ with open('metrics.json', 'w') as f:
     json.dump({'accuracy': acc}, f, indent=4)
 
 # Generate and save confusion matrix plot
-cm = confusion_matrix(y, preds, labels=model.classes_)
+cm = confusion_matrix(y, preds)
 plt.figure(figsize=(8, 6))
-sns.heatmap(cm, annot=True, fmt='d', xticklabels=model.classes_, yticklabels=model.classes_)
+sns.heatmap(cm, annot=True, fmt='d', cmap='Greens')
 plt.xlabel('Predicted')
 plt.ylabel('Actual')
 plt.title('Confusion Matrix')
